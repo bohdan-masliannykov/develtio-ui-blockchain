@@ -1,0 +1,19 @@
+<div class="card p-3 block">
+  <h2>Blok</h2>
+  <div><b>Timestamp</b>: {{ block.timestamp }}</div>
+  <div>
+    <b>Hash</b>: <i>{{ block.hash }}</i>
+  </div>
+  <div>
+    <b>Previous hash</b>: <i>{{ block.previousHash }}</i>
+  </div>
+
+  <div>
+    <b>None</b>: <i>{{ block.nonce }}</i>
+  </div>
+
+  <div>
+    <b>Transactions</b>:
+    <pre>{{ block.data | json }}</pre>
+  </div>
+</div>

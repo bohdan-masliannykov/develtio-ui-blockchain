@@ -1,0 +1,108 @@
+<h4>#Transaction</h4>
+<form [formGroup]="form" (ngSubmit)="submitTransaction()">
+  <div class="row">
+    <div class="col-10">
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <input
+                trim="blur"
+                type="text"
+                class="form-control"
+                placeholder="Sender"
+                [name]="TransactionForm.SENDER"
+                [formControlName]="TransactionForm.SENDER"
+                [ngClass]="{
+                  'is-invalid': controls[TransactionForm.SENDER].invalid && controls[TransactionForm.SENDER].touched
+                }"
+              />
+              <div class="arrow">&#8594;</div>
+            </div>
+          </div>
+          <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Pole jest wymagane',
+              control: controls[TransactionForm.SENDER]
+            }"
+          ></ng-container>
+        </div>
+        <div class="col-6">
+          <input
+            trim="blur"
+            type="text"
+            class="form-control"
+            placeholder="Recipient"
+            [name]="TransactionForm.RECIPIENT"
+            [formControlName]="TransactionForm.RECIPIENT"
+            [ngClass]="{
+              'is-invalid': controls[TransactionForm.RECIPIENT].invalid && controls[TransactionForm.RECIPIENT].touched
+            }"
+          />
+          <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Pole jest wymagane',
+              control: controls[TransactionForm.RECIPIENT]
+            }"
+          ></ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="input-group">
+        <input
+          type="text"
+          digitOnly
+          inputNumber
+          class="form-control"
+          decimal="true"
+          decimalSeparator="."
+          placeholder="0.00"
+          pattern="[0-9]+([.][0-9]+)?"
+          [name]="TransactionForm.AMOUNT"
+          [formControlName]="TransactionForm.AMOUNT"
+          [ngClass]="{
+            'is-invalid': controls[TransactionForm.AMOUNT].invalid && controls[TransactionForm.AMOUNT].touched
+          }"
+        />
+        <div class="input-group-append">
+          <span class="input-group-text">$</span>
+        </div>
+      </div>
+      <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'Pole jest wymagane',
+          control: controls[TransactionForm.AMOUNT]
+        }"
+      ></ng-container>
+
+      <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'min',
+          message: 'Min. wartość 0.1',
+          control: controls[TransactionForm.AMOUNT]
+        }"
+      ></ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 pt-3 text-right">
+      <button type="submit" class="btn btn-dark">Transfer money</button>
+    </div>
+  </div>
+</form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="text-danger">
+      {{ message }}
+    </div>
+  </ng-container>
+</ng-template>

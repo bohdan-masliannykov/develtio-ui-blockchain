@@ -1,0 +1,25 @@
+<h4>#Pending Transactions</h4>
+<div class="card p-3">
+  <ul class="list-unstyled p-0 m-0">
+    <li *ngFor="let i of service.blockchain.pendingTransactions">
+      {{ i.sender }} &#8594; {{ i.recipient }} : <b>$ {{ i.amount }}</b>
+    </li>
+  </ul>
+
+  <div *ngIf="!service.blockchain.pendingTransactions.length">
+    <div class="text-muted font-weight-bold py-4 text-center">
+      There is no pending transaction! Add one in the section above...
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 pt-3 text-right">
+    <button
+      class="btn btn-dark"
+      (click)="submitPendingTransactions()"
+      [disabled]="!service.blockchain.pendingTransactions.length || service.blockchain.processingTransactions"
+    >
+      Confirm transactions
+    </button>
+  </div>
+</div>
